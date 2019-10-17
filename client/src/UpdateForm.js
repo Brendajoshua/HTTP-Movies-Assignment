@@ -1,7 +1,7 @@
 import React from 'react';
 import axios from 'axios';
 
-const emptyForm = { title: '', director: '', metascore: '' }
+const emptyForm = { title: '', director: '', metascore: '', stars: [] }
 
 class UpdateForm extends React.Component {
     state = {
@@ -29,6 +29,16 @@ class UpdateForm extends React.Component {
             movie: {
                 ...this.state.movie,
                 [event.target.name]: event.target.value
+            }
+        })
+    }
+
+    handleStars = (event, index) => {
+        const newStars = this.state.movie.stars.map((star, i) => i === index ? event.target.value : star);
+        this.setState({
+            movie: {
+                ...this.state.movie,
+                stars: newStars
             }
         })
     }
@@ -65,6 +75,16 @@ class UpdateForm extends React.Component {
                 value={this.state.movie.metascore}
                 onChange={this.handleChange}
                 />
+                {this.state.movie.stars.map((star, index) => {
+                    return (
+                        <input
+                        type="text"
+                        name="stars"
+                        value={star}
+                        onChange={(event) => this.handleStars(event, index)}
+                        />
+                    )
+                })}
                 <button>Edit</button>
             </form>
         )
