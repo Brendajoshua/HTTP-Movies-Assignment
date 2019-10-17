@@ -21,6 +21,14 @@ const App = () => {
     setSavedList([...savedList, movie]);
   };
 
+  const updateMovies = (updatedMovie) => {
+    const newMovies = movies.map(movie => {
+      if (movie.id === updatedMovie.id) return updatedMovie;
+      else return movie
+    })
+    setMovies(newMovies);
+  }
+
   return (
     <>
       <SavedList list={savedList} />
@@ -31,7 +39,7 @@ const App = () => {
           return <Movie {...props} addToSavedList={addToSavedList} />;
         }}
       />
-      <Route path="/update-movie/:id" render={props => <UpdateForm {...props} movies={movies} />} />
+      <Route path="/update-movie/:id" render={props => <UpdateForm {...props} movies={movies} updateMovies={updateMovies} />} />
     </>
   );
 };
